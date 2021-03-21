@@ -53,7 +53,7 @@ function App() {
               <Grid item xs={2}>
                 <Paper className={classes.paper}>
                   <Button variant="outlined" color="secundary">
-                    AC
+                    AccccccC
                   </Button>
                 </Paper>
               </Grid>
