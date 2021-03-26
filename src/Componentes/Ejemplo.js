@@ -9,7 +9,7 @@ import { Alert } from '@material-ui/lab';
 
 const useStyles = makeStyles((theme) => ({
   button: {
-    margin: theme.spacing(1),
+    margin: theme.spacing(11111111111111111111111111),
   },
 }));
 
