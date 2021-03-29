@@ -1,0 +1,15 @@
+.button {
+    display: flex;
+    height: 4em;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    font-weight: lighter;
+    font-size: 1.4em;
+    
+
+  }
+  .operator {
+    background-color: #fe9241;
+    color: #fff;
+  }
