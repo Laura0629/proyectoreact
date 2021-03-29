@@ -1,226 +1,93 @@
-import React from 'react';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Typography from '@material-ui/core/Typography';
-import Container from '@material-ui/core/Container';
-import Button from '@material-ui/core/Button'
+//Padre de todos nuestros componentes
 
-import { makeStyles } from '@material-ui/core/styles';
-import Paper from '@material-ui/core/Paper';
-import Grid from '@material-ui/core/Grid';
-import TextField from '@material-ui/core/TextField';
+import React, { Component } from 'react';
+import './App.css';
+import Resultado from './components/Resultado';
+import Salida from "./components/Salida";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    flexGrow: 1,
-  },
-  paper: {
-    padding: theme.spacing(2),
-    textAlign: 'center',
-    color: theme.palette.text.secondary,
-  },
 
-  altura: {
-    paddingTop: 80,
-    textGrande: {
-      fontSize: 80,
+class App extends Component {
+    constructor() {
+        super();
+        this.state = {
+            result: ""
+
+            //this.state se pasa a nuestro componente de resultado.
+            //Esto nos permitirá manipular nuestra pantalla.
+        }
     }
-  },
 
+    //La función onclick, lee el argumento, que es el nombre del botón en el que se hizo clic,
+    // y cambia el estado de manera apropiada dependiendo de la entrada que se pasa.
 
-}));
+    onClick = button => {
+        if (button === "=") {
+            this.calculate()
+            //this.Calculate => Calcula el resultado de nuestra expresión, esto se dispara, cuando se presiona el botón “=”.
+        }
 
+        else if (button === "C") {
+            this.reset()
+            //this.Reset => Limpia nuestra salida, esto se activa cuando se presiona “C”.
+        }
+        else if (button === "CE") {
+            this.backspace()
+            //this.Backspace Limpia el último carácter que se presionó. activado en "CE".
+        }
 
-function App() {
-  const classes = useStyles();
+        else {
+            this.setState({
+                result: this.state.result + button
+            })
+        }
+    };
 
-  return (
-    <React.Fragment>
-      <CssBaseline />
-      <Container fixed className={classes.altura}>
-        <Typography component="div" style={{ backgroundColor: '#c0c0c0', height: '100vh' }}>
+    calculate = () => {
+        var checkResult = ''
+        if (this.state.result.includes('--')) {
+            checkResult = this.state.result.replace('--', '+')
+        }
 
-          <div className={classes.root}>
-            <Grid container spacing={3}>
-              <Grid item xs={12}>
-                <Paper className={classes.paper}>
+        else {
+            checkResult = this.state.result
+        }
 
-                  <form className={classes.root} noValidate autoComplete="off">
-                    <TextField id="outlined-basic" fullWidth label="Ingrese un valor" className={classes.textGrande} variant="outlined" />
-                  </form>
-                </Paper>
-              </Grid>
+        try {
+            this.setState({
+                // eslint-disable-next-line
+                result: (eval(checkResult) || "") + ""
+            })
+        } catch (e) {
+            this.setState({
+                result: "error"
+            })
 
-              <Grid item xs={2}>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="secundary">
-                    AC
-                  </Button>
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="">
-                    Ceeee
-                  </Button>
+        }
+    };
 
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="primary">
-                    %
-                  </Button>
+    reset = () => {
+        this.setState({
+            result: ""
+        })
+    };
 
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="primary">
-                    /
-                  </Button>
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-              </Grid>
-              
-              <Grid item xs={2}>
-
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="secundary">
-                    7
-                  </Button>
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="secundary">
-                    8
-                  </Button>
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="">
-                    9
-                  </Button>
-
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="primary">
-                    *
-                  </Button>
-
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-              </Grid>
-             
-              <Grid item xs={2}>
-
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="secundary">
-                    4
-                  </Button>
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="secundary">
-                    5
-                  </Button>
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="">
-                    6
-                  </Button>
-
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="primary">
-                    -
-                  </Button>
-
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-              </Grid>
-             
-              <Grid item xs={2}>
-
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="secundary">
-                    1
-                  </Button>
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="secundary">
-                    2
-                  </Button>
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="">
-                    3
-                  </Button>
-
-                </Paper>
-              </Grid>          
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="secundary">
-                    +
-                  </Button>
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-              </Grid>
-              
-              <Grid item xs={2}>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="secundary">
-                    0
-                  </Button>
-                </Paper>
-              </Grid>
-              <Grid item xs={2}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="">
-                    .
-                  </Button>
-
-                </Paper>
-              </Grid>
-              <Grid item xs={4}>
-                <Paper className={classes.paper}>
-                  <Button variant="outlined" color="primary" className={classes.margen}>=</Button>
-                </Paper>
-              </Grid> 
-            </Grid>
-          </div>
-        </Typography>
-
-      </Container>
-    </React.Fragment>
-  );
+    backspace = () => {
+        this.setState({
+            result: this.state.result.slice(0, -1)
+        })
+    };
+    //Componentes secundarios
+    render() {
+        return (
+            <div>
+                <div className="calculator-body">
+                    <br></br>
+                    <Resultado result={this.state.result} />
+                    <Salida onClick={this.onClick} />
+                </div>
+            </div>
+        );
+    }
 }
 
 export default App;
